@@ -1,3 +1,7 @@
+import { IsNumber, Min } from 'class-validator';
+
 export class FindMessagesDto {
-    chat: number;
+  @IsNumber()
+  @Min(1)
+  chat: number;
 }

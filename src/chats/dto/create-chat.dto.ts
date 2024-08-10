@@ -1,4 +1,10 @@
+import { ArrayMinSize, IsNotEmpty, IsString } from 'class-validator';
+
 export class CreateChatDto {
-    name: string;
-    users: number[];
+  @IsString()
+  @IsNotEmpty()
+  name: string;
+
+  @ArrayMinSize(2)
+  users: number[];
 }

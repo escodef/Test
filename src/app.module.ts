@@ -10,16 +10,21 @@ import { Chat } from './chats/entities/chat.entity';
 import { User } from './users/entities/user.entity';
 
 @Module({
-  imports: [UsersModule, ChatsModule, MessagesModule, TypeOrmModule.forRoot({
-    type: 'postgres',
-    host: 'localhost',
-    port: 5432,
-    username: 'postgres',
-    password: 'JNKei023dsp0i32',
-    database: 'postgres',
-    entities: [Message, Chat, User],
-    synchronize: true,
-  })],
+  imports: [
+    UsersModule,
+    ChatsModule,
+    MessagesModule,
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      host: 'localhost',
+      port: 5432,
+      username: 'postgres',
+      password: 'JNKei023dsp0i32',
+      database: 'postgres',
+      entities: [Message, Chat, User],
+      synchronize: true,
+    }),
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

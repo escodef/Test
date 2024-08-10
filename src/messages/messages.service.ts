@@ -12,28 +12,38 @@ import { using } from 'rxjs';
 @Injectable()
 export class MessagesService {
   constructor(
-    @InjectRepository(Message) 
+    @InjectRepository(Message)
     private readonly messagesRepository: Repository<Message>,
     @InjectRepository(Chat)
     private readonly chatRepository: Repository<Chat>,
     @InjectRepository(User)
-    private readonly userRepository: Repository<User>
+    private readonly userRepository: Repository<User>,
   ) {}
   async create(createMessageDto: CreateMessageDto) {
     const { chat: chatId, author, text } = createMessageDto;
-    const chat: Chat | null = await this.chatRepository.findOne({where: {
-      id: chatId
-    }, relations: ['users']});
-    if(!chat) throw new NotFoundException('Chat not found');
+    const chat: Chat | null = await this.chatRepository.findOne({
+      where: {
+        id: chatId,
+      },
+      relations: ['users'],
+    });
+    if (!chat) throw new NotFoundException('Chat not found');
     const user: User | null = chat.users.find((x) => x.id == author);
-    if(!user) throw new NotFoundException('User is not in this chat');
-    const message = this.messagesRepository.create({author: user, chat, text});
+    if (!user) throw new NotFoundException('User is not in this chat');
+    const message = this.messagesRepository.create({
+      author: user,
+      chat,
+      text,
+    });
     await this.messagesRepository.save(message);
     return message.id;
   }
   async findMessages(findMessagesDto: FindMessagesDto) {
     const { chat } = findMessagesDto;
-    const messages: Message[] = await this.messagesRepository.find({where: {chat: {id: chat}}, order: {created_at: 'ASC'}});
+    const messages: Message[] = await this.messagesRepository.find({
+      where: { chat: { id: chat } },
+      order: { created_at: 'ASC' },
+    });
     return messages;
   }
 }

@@ -1,21 +1,28 @@
-import { Chat } from "src/chats/entities/chat.entity";
-import { User } from "src/users/entities/user.entity";
-import { Column, CreateDateColumn, Entity, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Chat } from 'src/chats/entities/chat.entity';
+import { User } from 'src/users/entities/user.entity';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class Message {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @ManyToOne(() => Chat, chat => chat.messages)
-    chat: Chat;
-    
-    @ManyToOne(() => User)
-    author: User;
+  @ManyToOne(() => Chat, (chat) => chat.messages)
+  chat: Chat;
 
-    @Column()
-    text: string;
+  @ManyToOne(() => User)
+  author: User;
 
-    @CreateDateColumn({type: 'timestamp'})
-    created_at: Date;
+  @Column()
+  text: string;
+
+  @CreateDateColumn({ type: 'timestamp' })
+  created_at: Date;
 }
