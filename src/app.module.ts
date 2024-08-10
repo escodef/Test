@@ -8,9 +8,13 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Message } from './messages/entities/message.entity';
 import { Chat } from './chats/entities/chat.entity';
 import { User } from './users/entities/user.entity';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true
+    }),
     UsersModule,
     ChatsModule,
     MessagesModule,
